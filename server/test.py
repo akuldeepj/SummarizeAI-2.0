@@ -77,12 +77,18 @@ def summary_generator_url():
 
 @app.route('/api/get_yt_summary', methods=['POST'])
 def api():
-    video_id = request.json['video_id']
+    link = request.json['link']
+    video_id = link
+    for i in range(len(video_id)):
+        if video_id[i] == "=":
+            video_id = video_id[i+1:]
+            break
     summary = summarize_llama(get_transcript(video_id))
     # summary = summarize(get_transcript(video_id))
+    print(summary)
     return jsonify({'transcript': get_transcript(video_id),
                     'summary': summary,
-                    'video_id': video_id
+                    'link': link
                     })
 
 
