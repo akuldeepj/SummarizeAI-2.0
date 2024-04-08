@@ -12,7 +12,7 @@ model = genai.GenerativeModel('gemini-pro')
 def summarize(text):
     prompt_summarize = textwrap.dedent(
     """
-    Summarize the following text into bullet points , which doesn't exceed 120 words:
+    Summarize the following text into bullet points , which doesn't exceed 200 words:
     %s
     """
     ) % text
