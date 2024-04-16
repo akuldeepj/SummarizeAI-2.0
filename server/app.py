@@ -13,7 +13,7 @@ from pdfreader import read_pdf
 from flask_cors import CORS
 
 app=Flask(__name__)
-CORS(app)
+cors = CORS(app, resources={r"*": {"origins": "*"}})
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
