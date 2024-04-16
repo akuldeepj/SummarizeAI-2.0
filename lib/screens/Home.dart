@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:summarizeai/screens/underprogress.dart';
 import 'package:summarizeai/screens/yt_sum.dart';
 
 class Home extends StatefulWidget {
@@ -51,10 +52,10 @@ class _HomeState extends State<Home> {
                 : const Text('Pdf'),
       ),
       body: currentPageIndex == 0
-          ? YtSum()
+          ? UnderProgress()
           : currentPageIndex == 1
-              ? Home()
-              : Home(),
+              ? YtSum()
+              : UnderProgress(),
     );
   }
 }
