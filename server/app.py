@@ -50,6 +50,7 @@ def yttran():
 
 @app.route('/api/get_yt_summary', methods=['POST'])
 def api():
+
     link = request.json['link']
     video_id = link
     for i in range(len(video_id)):
