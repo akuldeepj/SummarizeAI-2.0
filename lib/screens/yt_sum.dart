@@ -17,7 +17,7 @@ class YtSum extends StatefulWidget {
 
 class _YtSumState extends State<YtSum> {
   late YoutubePlayerController _controller;
-  String finalsum = '';
+  String finalsum = 'Your summary will appear here';
   final _textController = TextEditingController();
   Future<String> getVideoSummary(String videoLink) async {
     final response = await http.post(
@@ -41,7 +41,7 @@ class _YtSumState extends State<YtSum> {
   void initState() {
     super.initState();
     _controller = YoutubePlayerController(
-      initialVideoId: 'iL1jv9mZqBc',
+      initialVideoId: '',
       flags: const YoutubePlayerFlags(
         autoPlay: true,
         mute: false,
@@ -101,9 +101,17 @@ class _YtSumState extends State<YtSum> {
                 ),
               ),
             ),
-            Container(
-              width: screenSize.width,
-              child: YoutubePlayer(controller: _controller),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                width: screenSize.width - 20,
+                child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: HexColor('#6D90DC'),
+                    ),
+                    child: YoutubePlayer(controller: _controller)),
+              ),
             ),
             SingleChildScrollView(
               child: Padding(
