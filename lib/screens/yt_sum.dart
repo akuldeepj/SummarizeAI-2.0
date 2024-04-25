@@ -21,7 +21,7 @@ class _YtSumState extends State<YtSum> {
   final _textController = TextEditingController();
   Future<String> getVideoSummary(String videoLink) async {
     final response = await http.post(
-      Uri.parse('http://127.0.0.1:8000/api/get_yt_summary'),
+      Uri.parse('http://192.168.208.195:8000/api/get_yt_summary'),
       headers: <String, String>{
         'Content-Type': 'application/json',
       },

@@ -78,7 +78,7 @@ def upload_pdf():
     if pdf_file and pdf_file.filename.endswith('.pdf'):
         try:
             extracted_text = read_pdf(pdf_file)
-            summarized_text = summarize_llama(extracted_text)
+            summarized_text = summarize(extracted_text)
             print(summarized_text)
             return jsonify({'text': summarized_text}), 200
         except Exception as e:
@@ -87,4 +87,4 @@ def upload_pdf():
         return jsonify({'error': 'File format not supported, please upload a PDF file'}), 400
 
 if __name__ == '__main__':
-    app.run(debug=True,port=8000)
+    app.run(debug=True,host='0.0.0.0',port=8000)

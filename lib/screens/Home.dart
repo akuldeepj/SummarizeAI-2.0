@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:summarizeai/screens/pdfsum.dart';
 import 'package:summarizeai/screens/underprogress.dart';
 import 'package:summarizeai/screens/yt_sum.dart';
 
@@ -40,8 +41,7 @@ class _HomeState extends State<Home> {
             label: 'Youtube',
           ),
           NavigationDestination(icon: Icon(Icons.picture_as_pdf), label: 'Pdf'),
-          // NavigationDestination(
-          //     icon: Icon(Icons.document_scanner_rounded), label: 'Ask PDF'),
+
         ],
       ),
       appBar: AppBar(
@@ -55,7 +55,7 @@ class _HomeState extends State<Home> {
           ? UnderProgress()
           : currentPageIndex == 1
               ? YtSum()
-              : UnderProgress(),
+              : PdfUploadPage(),
     );
   }
 }
