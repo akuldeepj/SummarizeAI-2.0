@@ -3,6 +3,9 @@ import textwrap
 import os
 
 import google.generativeai as genai
+from dotenv import load_dotenv
+
+load_dotenv()
 GOOGLE_API_KEY=os.getenv('GOOGLE_API_KEY')
 
 genai.configure(api_key=GOOGLE_API_KEY)
@@ -12,7 +15,7 @@ model = genai.GenerativeModel('gemini-pro')
 def summarize(text):
     prompt_summarize = textwrap.dedent(
     """
-    Summarize the following text into bullet points , which doesn't exceed 200 words:
+    Summarize the following text into bullet points , which doesn't exceed 200 words and don't use markdown :
     %s
     """
     ) % text
