@@ -37,7 +37,7 @@ class _PdfUploadPageState extends State<PdfUploadPage> {
     }
 
     var uri = Uri.parse(
-        'http://192.168.208.195:8000/api/pdfsummary'); // Replace with your server endpoint
+        'http://192.0.0.2:8000/api/pdfsummary'); // Replace with your server endpoint
 
     var request = http.MultipartRequest('POST', uri)
       ..files.add(await http.MultipartFile.fromPath(
