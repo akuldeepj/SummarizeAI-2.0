@@ -11,9 +11,13 @@ from gemini_llm import summarize
 from llama_llm import summarize_llama, extract_data_website, split_text_chunks
 from pdfreader import read_pdf
 from flask_cors import CORS
+from dotenv import load_dotenv
+import os
 
 app=Flask(__name__)
 cors = CORS(app, resources={r"*": {"origins": "*"}})
+
+load_dotenv()
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
@@ -57,8 +61,8 @@ def api():
         if video_id[i] == "=":
             video_id = video_id[i+1:]
             break
-    summary = summarize_llama(get_transcript(video_id))
-    # summary = summarize(get_transcript(video_id))
+    # summary = summarize_llama(get_transcript(video_id))
+    summary = summarize(get_transcript(video_id),key = os.getenv('GOOGLE_API_KEY'))
     print(summary)
     return jsonify({'transcript': get_transcript(video_id),
                     'summary': summary,
@@ -87,4 +91,5 @@ def upload_pdf():
         return jsonify({'error': 'File format not supported, please upload a PDF file'}), 400
 
 if __name__ == '__main__':
+
     app.run(debug=True,host='0.0.0.0',port=8000)
