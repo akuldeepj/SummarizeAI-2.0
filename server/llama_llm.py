@@ -13,7 +13,7 @@ def extract_data_website(url):
     for page in data:
         text +=page.page_content + " "
         return text
-
+    
 def summarize_llama(text):
     text_chunks = split_text_chunks(text)
 

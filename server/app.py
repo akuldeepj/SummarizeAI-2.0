@@ -37,7 +37,6 @@ def summary_generator_url():
     response= {
         'submitted_url': encode_url,
         'summary': summary,
-
     }
     return jsonify(response)
 
@@ -61,8 +60,8 @@ def api():
         if video_id[i] == "=":
             video_id = video_id[i+1:]
             break
-    # summary = summarize_llama(get_transcript(video_id))
-    summary = summarize(get_transcript(video_id),key = os.getenv('GOOGLE_API_KEY'))
+    summary = summarize_llama(get_transcript(video_id))
+    # summary = summarize(get_transcript(video_id),key = os.getenv('GOOGLE_API_KEY'))
     print(summary)
     return jsonify({'transcript': get_transcript(video_id),
                     'summary': summary,
