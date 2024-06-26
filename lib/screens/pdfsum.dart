@@ -80,9 +80,14 @@ class _PdfUploadPageState extends State<PdfUploadPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              ElevatedButton(
-                onPressed: _pickPDF,
-                child: Text('Select PDF'),
+              Container(
+                margin: EdgeInsets.only(top: 50),
+                child: ElevatedButton(
+                  onPressed: _pickPDF,
+                  child: Text('Select PDF', style: TextStyle(color: Colors.white)),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.black, ),
+                ),
               ),
               SizedBox(height: 20),
               if (_selectedFile != null)
@@ -98,7 +103,9 @@ class _PdfUploadPageState extends State<PdfUploadPage> {
               SizedBox(height: 20),
               ElevatedButton(
                 onPressed: _uploadPDF,
-                child: Text('Upload PDF'),
+                child: Text('Upload PDF', style: TextStyle(color: Colors.white)),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.black, )
               ),
               SizedBox(height: 20),
               if (_extractedText != null)
