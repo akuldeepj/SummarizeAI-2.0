@@ -13,6 +13,7 @@ from pdfreader import read_pdf
 from flask_cors import CORS
 from dotenv import load_dotenv
 import os
+import flowchart
 
 app=Flask(__name__)
 cors = CORS(app, resources={r"*": {"origins": "*"}})
@@ -88,6 +89,20 @@ def upload_pdf():
             return jsonify({'error': str(e)}), 500
     else:
         return jsonify({'error': 'File format not supported, please upload a PDF file'}), 400
+    
+
+@app.route('/generate-mind-map', methods=['POST'])
+def generate_mind_map():
+    data = request.json
+    text = data.get('text')
+    api_key = data.get('api_key')
+    api_key = os.getenv('GOOGLE_API_KEY') 
+    mind_map_code = flowchart.generate_mind_map_structure(text,api_key=os.getenv('GOOGLE_API_KEY'))
+    print(mind_map_code)
+    mind_map_code = mind_map_code.replace("```","")
+    print(mind_map_code)
+    
+    return jsonify({"mind_map_code": mind_map_code})
 
 if __name__ == '__main__':
 

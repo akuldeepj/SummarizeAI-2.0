@@ -3,6 +3,7 @@ import 'package:summarizeai/screens/pdfsum.dart';
 import 'package:summarizeai/screens/underprogress.dart';
 import 'package:summarizeai/screens/yt_sum.dart';
 import 'package:summarizeai/utils/Hexcolor.dart';
+import 'package:summarizeai/screens/flowchart.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -55,6 +56,10 @@ class _HomeState extends State<Home> {
               selectedIcon: Icon(Icons.picture_as_pdf, color: currentPageIndex == 2 ? HexColor('#c49450') : Colors.black),
               icon: Icon(Icons.picture_as_pdf, color: currentPageIndex == 2 ? HexColor('#c49450') : Colors.black),
               label: 'Pdf'),
+              NavigationDestination(
+              selectedIcon: Icon(Icons.picture_as_pdf, color: currentPageIndex == 3 ? HexColor('#c49450') : Colors.black),
+              icon: Icon(Icons.picture_as_pdf, color: currentPageIndex == 3 ? HexColor('#c49450') : Colors.black),
+              label: 'flowchart'),
         
           ],
         ),
@@ -71,7 +76,7 @@ class _HomeState extends State<Home> {
           ? UnderProgress()
           : currentPageIndex == 1
               ? YtSum()
-              : PdfUploadPage(),
+              :currentPageIndex ==2 ? PdfUploadPage():MindMapApp(),
     );
   }
 }
