@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:summarizeai/screens/pdfsum.dart';
 import 'package:summarizeai/screens/underprogress.dart';
 import 'package:summarizeai/screens/yt_sum.dart';
+import 'package:summarizeai/utils/Hexcolor.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -22,34 +23,49 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: NavigationBar(
-        onDestinationSelected: (int index) {
-          setState(() {
-            currentPageIndex = index;
-          });
-        },
-        indicatorColor: Theme.of(context).colorScheme.primary,
-        selectedIndex: currentPageIndex,
-        destinations: const <Widget>[
-          NavigationDestination(
-            selectedIcon: Icon(Icons.home),
-            icon: Icon(Icons.home_outlined),
-            label: 'Home',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.youtube_searched_for),
-            label: 'Youtube',
-          ),
-          NavigationDestination(icon: Icon(Icons.picture_as_pdf), label: 'Pdf'),
-
-        ],
+      bottomNavigationBar: Theme(
+        data: Theme.of(context).copyWith(
+    navigationBarTheme: NavigationBarThemeData(
+      labelTextStyle: MaterialStateProperty.all<TextStyle>(
+        TextStyle(color: Colors.black), // Set your desired color here
+      ),),),
+        child: NavigationBar(
+          backgroundColor: HexColor('#ffe4c4'),
+          elevation: 0,
+          onDestinationSelected: (int index) {
+            setState(() {
+              currentPageIndex = index;
+              
+            });
+          },
+          indicatorColor: Colors.black,
+          selectedIndex: currentPageIndex,
+          destinations:  <Widget>[
+            NavigationDestination(
+              selectedIcon: Icon(Icons.home, color: currentPageIndex == 0 ? HexColor('#c49450') : Colors.black),
+              icon: Icon(Icons.home_outlined, color: currentPageIndex == 0 ? HexColor('#c49450') : Colors.black),
+              label: 'Home',
+            ),
+            NavigationDestination(
+              selectedIcon: Icon(Icons.youtube_searched_for, color: currentPageIndex == 1 ? HexColor('#c49450') : Colors.black),
+              icon: Icon(Icons.youtube_searched_for, color: currentPageIndex == 1 ? HexColor('#c49450') : Colors.black),
+              label: 'Youtube',
+            ),
+            NavigationDestination(
+              selectedIcon: Icon(Icons.picture_as_pdf, color: currentPageIndex == 2 ? HexColor('#c49450') : Colors.black),
+              icon: Icon(Icons.picture_as_pdf, color: currentPageIndex == 2 ? HexColor('#c49450') : Colors.black),
+              label: 'Pdf'),
+        
+          ],
+        ),
       ),
       appBar: AppBar(
+        backgroundColor: HexColor('#ffe4c4'),
         title: currentPageIndex == 0
-            ? const Text('Home')
+            ? const Text('Home', style: TextStyle(color: Colors.black))
             : currentPageIndex == 1
-                ? const Text('Youtube')
-                : const Text('Pdf'),
+                ? const Text('Youtube', style: TextStyle(color: Colors.black))
+                : const Text('Pdf', style: TextStyle(color: Colors.black)),
       ),
       body: currentPageIndex == 0
           ? UnderProgress()

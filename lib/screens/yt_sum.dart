@@ -81,7 +81,7 @@ class _YtSumState extends State<YtSum> {
                         color: Colors.white,
                       ),
                       filled: true,
-                      fillColor: HexColor('#6D90DC'),
+                      fillColor: Colors.black,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(15),
                       ),
@@ -117,15 +117,15 @@ class _YtSumState extends State<YtSum> {
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Container(
-                  width: MediaQuery.of(context).size.width - 20,
-                  padding: EdgeInsets.all(10.0),
+                  width: MediaQuery.of(context).size.width - 35,
+                  padding: EdgeInsets.all(15.0),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    color: HexColor('#6D90DC'),
+                    color: Colors.black,
                   ),
                   child: Text(
                     finalsum,
-                    style: TextStyle(fontSize: 16),
+                    style: TextStyle(color: Colors.white,fontSize: 16),
                   ),
                 ),
               ),
