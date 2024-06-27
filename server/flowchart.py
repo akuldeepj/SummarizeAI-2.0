@@ -19,7 +19,7 @@ def generate_mind_map_structure(text,api_key):
     genai.configure(api_key=api_key)
     prompt_mind_map = textwrap.dedent(
     """
-    Can you create a Mermaid diagram to help understand the following text ?
+    Can you create a Mermaid diagram to help understand the following text use single letters to denote and don't put heading like mermaid?
     %s
     example template:
     graph TD;

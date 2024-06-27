@@ -5,20 +5,13 @@ import 'package:webview_flutter/webview_flutter.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:io';
 
-
 class MindMapApp extends StatelessWidget {
   const MindMapApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-        primarySwatch: Colors.deepPurple,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      home: const Scaffold(
-        body: SafeArea(child: MindMapScreen()),
-      ),
+    return Scaffold(
+        body: MindMapScreen()
     );
   }
 }
@@ -30,7 +23,8 @@ class MindMapScreen extends StatefulWidget {
   State<MindMapScreen> createState() => _MindMapScreenState();
 }
 
-class _MindMapScreenState extends State<MindMapScreen> with SingleTickerProviderStateMixin {
+class _MindMapScreenState extends State<MindMapScreen>
+    with SingleTickerProviderStateMixin {
   late final WebViewController _controller;
   String _mindMapCode = '';
   late AnimationController _animationController;
@@ -68,8 +62,7 @@ class _MindMapScreenState extends State<MindMapScreen> with SingleTickerProvider
       },
       body: jsonEncode(<String, String>{
         'text': """
-        In the heart of a bustling city, where towering skyscrapers cast long shadows over narrow alleyways, lived a reclusive inventor named Theo. Theo spent his days tinkering in a cluttered workshop, creating whimsical gadgets that fascinated the neighborhood children. One rainy evening, while experimenting with an old pocket watch, Theo accidentally discovered a way to momentarily freeze time. Delighted by his find, he ventured out into the rain-slick streets, using his newfound power to help strangers in small but meaningful ways—rescuing a kitten from a tree, returning a lost wallet, and even saving a child from a speeding car. As dawn approached and the city began to stir, Theo returned to his workshop, content in knowing that his quiet existence had touched many lives, even if they never knew it was him.
-        """,
+Database Management Systems (DBMS) are software systems designed to manage and facilitate the creation, manipulation, and administration of databases. A DBMS provides a systematic way to create, retrieve, update, and manage data, ensuring data integrity, security, and consistency. It allows multiple users and applications to interact with the data concurrently without compromising its integrity. Key concepts within DBMS include data models (such as relational, hierarchical, and network models), Structured Query Language (SQL) for querying and managing data, transaction management to ensure data reliability through ACID properties (Atomicity, Consistency, Isolation, Durability), and indexing for efficient data retrieval. By abstracting the complexities of data storage and handling, DBMSs play a crucial role in a wide range of applications, from small personal projects to large-scale enterprise systems.        """,
         'api_key': 'your_api_key_here',
       }),
     );
@@ -121,7 +114,8 @@ class _MindMapScreenState extends State<MindMapScreen> with SingleTickerProvider
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Mind Map Viewer', style: TextStyle(fontWeight: FontWeight.bold)),
+        title: const Text('Mind Map Viewer',
+            style: TextStyle(fontWeight: FontWeight.bold)),
         centerTitle: true,
       ),
       body: FadeTransition(
