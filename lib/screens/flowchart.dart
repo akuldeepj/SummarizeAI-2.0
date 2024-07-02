@@ -24,7 +24,7 @@ class MindMapScreen extends StatefulWidget {
 }
 
 class _MindMapScreenState extends State<MindMapScreen>
-    with SingleTickerProviderStateMixin {
+  with SingleTickerProviderStateMixin {
   late final WebViewController _controller;
   String _mindMapCode = '';
   late AnimationController _animationController;
@@ -62,7 +62,7 @@ class _MindMapScreenState extends State<MindMapScreen>
       },
       body: jsonEncode(<String, String>{
         'text': """
-Database Management Systems (DBMS) are software systems designed to manage and facilitate the creation, manipulation, and administration of databases. A DBMS provides a systematic way to create, retrieve, update, and manage data, ensuring data integrity, security, and consistency. It allows multiple users and applications to interact with the data concurrently without compromising its integrity. Key concepts within DBMS include data models (such as relational, hierarchical, and network models), Structured Query Language (SQL) for querying and managing data, transaction management to ensure data reliability through ACID properties (Atomicity, Consistency, Isolation, Durability), and indexing for efficient data retrieval. By abstracting the complexities of data storage and handling, DBMSs play a crucial role in a wide range of applications, from small personal projects to large-scale enterprise systems.        """,
+  Database Management Systems (DBMS) are software systems designed to manage and facilitate the creation, manipulation, and administration of databases. A DBMS provides a systematic way to create, retrieve, update, and manage data, ensuring data integrity, security, and consistency. It allows multiple users and applications to interact with the data concurrently without compromising its integrity. Key concepts within DBMS include data models (such as relational, hierarchical, and network models), Structured Query Language (SQL) for querying and managing data, transaction management to ensure data reliability through ACID properties (Atomicity, Consistency, Isolation, Durability), and indexing for efficient data retrieval. By abstracting the complexities of data storage and handling, DBMSs play a crucial role in a wide range of applications, from small personal projects to large-scale enterprise systems.        """,
         'api_key': 'your_api_key_here',
       }),
     );
