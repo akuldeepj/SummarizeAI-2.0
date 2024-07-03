@@ -7,6 +7,7 @@ import 'package:flutter/widgets.dart';
 import 'package:summarizeai/utils/Hexcolor.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:http/http.dart' as http;
+import 'package:summarizeai/utils/secret.dart';
 
 class YtSum extends StatefulWidget {
   const YtSum({Key? key}) : super(key: key);
@@ -21,7 +22,7 @@ class _YtSumState extends State<YtSum> {
   final _textController = TextEditingController();
   Future<String> getVideoSummary(String videoLink) async {
     final response = await http.post(
-      Uri.parse('http://192.168.0.101:8000/api/get_yt_summary'),
+      Uri.parse('$IPAddress/api/get_yt_summary'),
       headers: <String, String>{
         'Content-Type': 'application/json',
       },

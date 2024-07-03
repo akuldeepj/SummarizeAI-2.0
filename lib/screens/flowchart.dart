@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:io';
+import 'package:summarizeai/utils/secret.dart';
 
 class MindMapApp extends StatelessWidget {
   const MindMapApp({super.key});
@@ -56,7 +57,7 @@ class _MindMapScreenState extends State<MindMapScreen>
 
   Future<void> _fetchMindMapCode() async {
     final response = await http.post(
-      Uri.parse('http://192.168.0.101:8000/generate-mind-map'),
+      Uri.parse('$IPAddress/generate-mind-map'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },

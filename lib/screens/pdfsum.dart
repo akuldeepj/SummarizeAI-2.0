@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:summarizeai/screens/hh.dart';
 import 'package:summarizeai/screens/pdfviewer.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
+import 'package:summarizeai/utils/secret.dart';
 
 class PdfUploadPage extends StatefulWidget {
   @override
@@ -37,7 +38,7 @@ class _PdfUploadPageState extends State<PdfUploadPage> {
     }
 
     var uri = Uri.parse(
-        'http://192.168.218.195:8000/api/pdfsummary'); // Replace with your server endpoint
+        '$IPAddress/api/pdfsummary'); // Replace with your server endpoint
 
     var request = http.MultipartRequest('POST', uri)
       ..files.add(await http.MultipartFile.fromPath(

@@ -32,8 +32,8 @@ def summary_generator_url():
     text=extract_data_website(encode_url)
     #text_chunks=split_text_chunks(text)
     #print(len(text_chunks))
-    summary=summarize_llama(text)
-    # summary=summarize(text)
+    # summary=summarize_llama(text)
+    summary=summarize(text)
     print("Here is the Complete Summary", summary)
     response= {
         'submitted_url': encode_url,
@@ -61,8 +61,8 @@ def api():
         if video_id[i] == "=":
             video_id = video_id[i+1:]
             break
-    summary = summarize_llama(get_transcript(video_id))
-    # summary = summarize(get_transcript(video_id),key = os.getenv('GOOGLE_API_KEY'))
+    # summary = summarize_llama(get_transcript(video_id))
+    summary = summarize(get_transcript(video_id),key = os.getenv('GOOGLE_API_KEY'))
     print(summary)
     return jsonify({'transcript': get_transcript(video_id),
                     'summary': summary,
@@ -82,10 +82,11 @@ def upload_pdf():
     if pdf_file and pdf_file.filename.endswith('.pdf'):
         try:
             extracted_text = read_pdf(pdf_file)
-            summarized_text = summarize(extracted_text)
+            summarized_text = summarize(extracted_text,key=os.getenv('GOOGLE_API_KEY'))
             print(summarized_text)
             return jsonify({'text': summarized_text}), 200
         except Exception as e:
+            print(e)
             return jsonify({'error': str(e)}), 500
     else:
         return jsonify({'error': 'File format not supported, please upload a PDF file'}), 400
@@ -94,16 +95,28 @@ def upload_pdf():
 @app.route('/generate-mind-map', methods=['POST'])
 def generate_mind_map():
     data = request.json
-    text = data.get('text')
-    api_key = data.get('api_key')
-    api_key = os.getenv('GOOGLE_API_KEY') 
-    mind_map_code = flowchart.generate_mind_map_structure(text,api_key=os.getenv('GOOGLE_API_KEY'))
-    print(mind_map_code)
-    mind_map_code = mind_map_code.replace("```","")
-    print(mind_map_code)
-    
-    return jsonify({"mind_map_code": mind_map_code})
+    if 'pdfFile' not in request.files:
+        return jsonify({'error': 'No file part'}), 400
 
+    pdf_file = request.files['pdfFile']
+    if pdf_file.filename == '':
+        return jsonify({'error': 'No selected file'}), 400
+
+    if pdf_file and pdf_file.filename.endswith('.pdf'):
+        try:
+            extracted_text = read_pdf(pdf_file)
+            api_key = data.get('api_key')
+            api_key = os.getenv('GOOGLE_API_KEY') 
+            mind_map_code = flowchart.generate_mind_map_structure(extracted_text,api_key=os.getenv('GOOGLE_API_KEY'))
+            print(mind_map_code)
+            mind_map_code = mind_map_code.replace("```","")
+            print(mind_map_code)
+            return jsonify({"mind_map_code": mind_map_code})
+        except Exception as e:
+            print(e)
+            return jsonify({'error': str(e)}), 500
+    else:
+        return jsonify({'error': 'File format not supported, please upload a PDF file'}), 400
 if __name__ == '__main__':
 
     app.run(debug=True,host='0.0.0.0',port=8000)
