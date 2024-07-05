@@ -59,24 +59,40 @@ class _HomeState extends State<Home> {
               NavigationDestination(
               selectedIcon: Icon(Icons.picture_as_pdf, color: currentPageIndex == 3 ? HexColor('#c49450') : Colors.black),
               icon: Icon(Icons.picture_as_pdf, color: currentPageIndex == 3 ? HexColor('#c49450') : Colors.black),
-              label: 'flowchart'),
+              label: 'Flow Chart'),
         
           ],
         ),
       ),
-      appBar: AppBar(
-        backgroundColor: HexColor('#ffe4c4'),
-        title: currentPageIndex == 0
-            ? const Text('Home', style: TextStyle(color: Colors.black))
-            : currentPageIndex == 1
-                ? const Text('Youtube', style: TextStyle(color: Colors.black))
-                : const Text('Pdf', style: TextStyle(color: Colors.black)),
-      ),
-      body: currentPageIndex == 0
-          ? UnderProgress()
-          : currentPageIndex == 1
-              ? YtSum()
-              :currentPageIndex ==2 ? PdfUploadPage():MindMapApp(),
-    );
+     appBar: AppBar(
+  backgroundColor: HexColor('#ffe4c4'),
+  title: Builder(
+    builder: (context) {
+      if (currentPageIndex == 0) {
+        return const Text('Home', style: TextStyle(color: Colors.black));
+      } else if (currentPageIndex == 1) {
+        return const Text('Youtube', style: TextStyle(color: Colors.black));
+      } else if (currentPageIndex == 2){
+        return const Text('Pdf', style: TextStyle(color: Colors.black));
+      } else {
+        return const Text('Flow Chart', style: TextStyle(color: Colors.black));
+      }
+
+    },
+  ),
+),
+body: Builder(
+  builder: (context) {
+    if (currentPageIndex == 0) {
+      return UnderProgress();
+    } else if (currentPageIndex == 1) {
+      return YtSum();
+    } else if (currentPageIndex == 2) {
+      return PdfUploadPage();
+    } else {
+      return MindMapApp();
+    }
+  },
+),);
   }
 }

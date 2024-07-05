@@ -94,10 +94,9 @@ def upload_pdf():
 
 @app.route('/generate-mind-map', methods=['POST'])
 def generate_mind_map():
-    data = request.json
     if 'pdfFile' not in request.files:
         return jsonify({'error': 'No file part'}), 400
-
+    
     pdf_file = request.files['pdfFile']
     if pdf_file.filename == '':
         return jsonify({'error': 'No selected file'}), 400
@@ -105,11 +104,13 @@ def generate_mind_map():
     if pdf_file and pdf_file.filename.endswith('.pdf'):
         try:
             extracted_text = read_pdf(pdf_file)
-            api_key = data.get('api_key')
-            api_key = os.getenv('GOOGLE_API_KEY') 
-            mind_map_code = flowchart.generate_mind_map_structure(extracted_text,api_key=os.getenv('GOOGLE_API_KEY'))
+            api_key = os.getenv('GOOGLE_API_KEY')
+            if not api_key:
+                return jsonify({'error': 'API key is missing'}), 400
+            
+            mind_map_code = flowchart.generate_mind_map_structure(extracted_text, api_key=api_key)
             print(mind_map_code)
-            mind_map_code = mind_map_code.replace("```","")
+            mind_map_code = mind_map_code.replace("```", "")
             print(mind_map_code)
             return jsonify({"mind_map_code": mind_map_code})
         except Exception as e:
@@ -117,6 +118,7 @@ def generate_mind_map():
             return jsonify({'error': str(e)}), 500
     else:
         return jsonify({'error': 'File format not supported, please upload a PDF file'}), 400
+    
 if __name__ == '__main__':
 
     app.run(debug=True,host='0.0.0.0',port=8000)

@@ -1,9 +1,11 @@
-import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:webview_flutter/webview_flutter.dart';
-import 'package:path_provider/path_provider.dart';
 import 'dart:io';
+import 'package:flutter/material.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:http/http.dart' as http;
+import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 import 'package:summarizeai/utils/secret.dart';
 
 class MindMapApp extends StatelessWidget {
@@ -11,9 +13,7 @@ class MindMapApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: MindMapScreen()
-    );
+    return MindMapScreen();
   }
 }
 
@@ -24,17 +24,16 @@ class MindMapScreen extends StatefulWidget {
   State<MindMapScreen> createState() => _MindMapScreenState();
 }
 
-class _MindMapScreenState extends State<MindMapScreen>
-  with SingleTickerProviderStateMixin {
-  late final WebViewController _controller;
+class _MindMapScreenState extends State<MindMapScreen> with SingleTickerProviderStateMixin {
+  WebViewController? _controller;
   String _mindMapCode = '';
   late AnimationController _animationController;
   late Animation<double> _animation;
+  File? _selectedFile;
 
   @override
   void initState() {
     super.initState();
-    _fetchMindMapCode();
 
     _animationController = AnimationController(
       vsync: this,
@@ -55,30 +54,48 @@ class _MindMapScreenState extends State<MindMapScreen>
     super.dispose();
   }
 
-  Future<void> _fetchMindMapCode() async {
-    final response = await http.post(
-      Uri.parse('$IPAddress/generate-mind-map'),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(<String, String>{
-        'text': """
-  Database Management Systems (DBMS) are software systems designed to manage and facilitate the creation, manipulation, and administration of databases. A DBMS provides a systematic way to create, retrieve, update, and manage data, ensuring data integrity, security, and consistency. It allows multiple users and applications to interact with the data concurrently without compromising its integrity. Key concepts within DBMS include data models (such as relational, hierarchical, and network models), Structured Query Language (SQL) for querying and managing data, transaction management to ensure data reliability through ACID properties (Atomicity, Consistency, Isolation, Durability), and indexing for efficient data retrieval. By abstracting the complexities of data storage and handling, DBMSs play a crucial role in a wide range of applications, from small personal projects to large-scale enterprise systems.        """,
-        'api_key': 'your_api_key_here',
-      }),
+  Future<void> _pickPDF() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['pdf'],
     );
 
-    if (response.statusCode == 200) {
+    if (result != null) {
       setState(() {
-        _mindMapCode = jsonDecode(response.body)['mind_map_code'];
-        _loadMindMap();
+        _selectedFile = File(result.files.single.path!);
       });
-    } else {
-      throw Exception('Failed to load mind map code');
     }
   }
 
-  void _loadMindMap() {
+  Future<void> _uploadPDF() async {
+    if (_selectedFile == null) {
+      // Handle case when no file is selected
+      return;
+    }
+
+    var uri = Uri.parse('$IPAddress/generate-mind-map'); // Replace with your server endpoint
+
+    var request = http.MultipartRequest('POST', uri)
+      ..files.add(await http.MultipartFile.fromPath(
+        'pdfFile',
+        _selectedFile!.path,
+      ));
+
+    var response = await request.send();
+
+    if (response.statusCode == 200) {
+      var responseBody = await response.stream.bytesToString();
+      setState(() {
+        _mindMapCode = json.decode(responseBody)['mind_map_code'];
+        _loadMindMap();
+      });
+    } else {
+      print('Failed to upload file');
+      print(response.reasonPhrase);
+    }
+  }
+
+  void _loadMindMap() async {
     if (_mindMapCode.isNotEmpty) {
       final String htmlContent = """
         <!DOCTYPE html>
@@ -97,9 +114,8 @@ class _MindMapScreenState extends State<MindMapScreen>
         </html>
       """;
 
-      _writeHtmlToFile(htmlContent).then((filePath) {
-        _controller.loadFile(filePath);
-      });
+      final filePath = await _writeHtmlToFile(htmlContent);
+      _controller?.loadUrl(Uri.file(filePath).toString());
     }
   }
 
@@ -114,19 +130,57 @@ class _MindMapScreenState extends State<MindMapScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Mind Map Viewer',
-            style: TextStyle(fontWeight: FontWeight.bold)),
-        centerTitle: true,
-      ),
-      body: FadeTransition(
-        opacity: _animation,
-        child: WebView(
-          initialUrl: 'about:blank',
-          onWebViewCreated: (controller) {
-            _controller = controller;
-          },
-          javascriptMode: JavascriptMode.unrestricted,
+      body: SingleChildScrollView(
+        physics: AlwaysScrollableScrollPhysics(),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Container(
+                margin: EdgeInsets.only(top: 50),
+                child: ElevatedButton(
+                  onPressed: _pickPDF,
+                  child: Text('Select PDF', style: TextStyle(color: Colors.white)),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.black,
+                  ),
+                ),
+              ),
+              SizedBox(height: 20),
+              if (_selectedFile != null)
+                GestureDetector(
+                  onTap: () {},
+                  child: Container(
+                    height: 500, // Increase the height of the PDF viewer
+                    child: SfPdfViewer.file(_selectedFile!),
+                  ),
+                ),
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: _uploadPDF,
+                child: Text('Upload PDF', style: TextStyle(color: Colors.white)),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.black,
+                ),
+              ),
+              SizedBox(height: 20),
+              if (_mindMapCode.isNotEmpty)
+                FadeTransition(
+                  opacity: _animation,
+                  child: Container(
+                    height: 500, // Increase the height of the mind map container
+                    child: WebView(
+                      initialUrl: 'about:blank',
+                      onWebViewCreated: (controller) {
+                        _controller = controller;
+                        _loadMindMap(); // Ensure _loadMindMap is called after the controller is initialized
+                      },
+                      javascriptMode: JavascriptMode.unrestricted,
+                    ),
+                  ),
+                ),
+            ],
+          ),
         ),
       ),
     );
