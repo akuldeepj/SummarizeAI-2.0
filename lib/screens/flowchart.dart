@@ -7,6 +7,7 @@ import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:summarizeai/utils/secret.dart';
+import 'package:summarizeai/screens/underprogress.dart';
 
 class MindMapApp extends StatelessWidget {
   const MindMapApp({super.key});
@@ -105,6 +106,12 @@ class _MindMapScreenState extends State<MindMapScreen> with SingleTickerProvider
             import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
             mermaid.initialize({startOnLoad:true});
           </script>
+          <style>
+            .mermaid {
+              transform: rotate(90deg); /* Rotate the mind map 90 degrees to the right */
+              transform-origin: top center; /* Adjust the transform origin to top center */
+            }
+          </style>
         </head>
         <body>
           <div class="mermaid">
@@ -130,58 +137,73 @@ class _MindMapScreenState extends State<MindMapScreen> with SingleTickerProvider
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        physics: AlwaysScrollableScrollPhysics(),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                margin: EdgeInsets.only(top: 50),
-                child: ElevatedButton(
-                  onPressed: _pickPDF,
-                  child: Text('Select PDF', style: TextStyle(color: Colors.white)),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.black,
-                  ),
-                ),
-              ),
-              SizedBox(height: 20),
-              if (_selectedFile != null)
-                GestureDetector(
-                  onTap: () {},
-                  child: Container(
-                    height: 500, // Increase the height of the PDF viewer
-                    child: SfPdfViewer.file(_selectedFile!),
-                  ),
-                ),
-              SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: _uploadPDF,
-                child: Text('Upload PDF', style: TextStyle(color: Colors.white)),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.black,
-                ),
-              ),
-              SizedBox(height: 20),
-              if (_mindMapCode.isNotEmpty)
-                FadeTransition(
-                  opacity: _animation,
-                  child: Container(
-                    height: 500, // Increase the height of the mind map container
-                    child: WebView(
-                      initialUrl: 'about:blank',
-                      onWebViewCreated: (controller) {
-                        _controller = controller;
-                        _loadMindMap(); // Ensure _loadMindMap is called after the controller is initialized
-                      },
-                      javascriptMode: JavascriptMode.unrestricted,
+      body: Stack(
+        children: [
+          SingleChildScrollView(
+            physics: AlwaysScrollableScrollPhysics(),
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  const SizedBox(height: 70), // Adjust the height to move everything down
+                  Container(
+                    margin: EdgeInsets.only(top: 50),
+                    child: ElevatedButton(
+                      onPressed: _pickPDF,
+                      child: Text('Select PDF', style: TextStyle(color: Colors.white)),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.black,
+                      ),
                     ),
                   ),
-                ),
-            ],
+                  SizedBox(height: 20),
+                  if (_selectedFile != null)
+                    GestureDetector(
+                      onTap: () {},
+                      child: Container(
+                        height: 500, // Increase the height of the PDF viewer
+                        child: SfPdfViewer.file(_selectedFile!),
+                      ),
+                    ),
+                  SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: _uploadPDF,
+                    child: Text('Upload PDF', style: TextStyle(color: Colors.white)),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.black,
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  if (_mindMapCode.isNotEmpty)
+                    FadeTransition(
+                      opacity: _animation,
+                      child: Container(
+                        height: 500, // Increase the height of the mind map container
+                        child: WebView(
+                          initialUrl: 'about:blank',
+                          onWebViewCreated: (controller) {
+                            _controller = controller;
+                            _loadMindMap(); // Ensure _loadMindMap is called after the controller is initialized
+                          },
+                          javascriptMode: JavascriptMode.unrestricted,
+                        ),
+                      ),
+                    ),
+                ],
+              ),
+            ),
           ),
-        ),
+          Positioned(
+            top: 40,
+            left: 10,
+            child: IconButton(
+              icon: Icon(Icons.arrow_back, color: Colors.black),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+          ),
+        ],
       ),
     );
   }
