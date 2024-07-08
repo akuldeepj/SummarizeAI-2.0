@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:summarizeai/screens/pdfsum.dart';
 import 'package:summarizeai/screens/underprogress.dart';
-import 'package:summarizeai/screens/yt_sum.dart';
-import 'package:summarizeai/screens/flowchart.dart';
+
 
 class Home extends StatefulWidget {
   const Home({super.key});

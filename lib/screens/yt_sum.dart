@@ -5,6 +5,7 @@ import 'package:summarizeai/utils/Hexcolor.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:summarizeai/utils/secret.dart';
+import 'package:summarizeai/screens/navbar.dart';
 
 class YtSum extends StatefulWidget {
   const YtSum({Key? key}) : super(key: key);
@@ -54,12 +55,14 @@ class _YtSumState extends State<YtSum> {
     final screenSize = MediaQuery.of(context).size;
 
     return Scaffold(
+      drawer: navbar(),
+      appBar: AppBar(title: Text('Youtube Video Summary'),),
       body: Stack(
         children: [
           SingleChildScrollView(
             child: Column(
               children: <Widget>[
-                const SizedBox(height: 90), // Move everything down
+                const SizedBox(height: 5), // Move everything down
                 Padding(
                   padding: const EdgeInsets.only(
                     left: 15.0,
@@ -173,19 +176,6 @@ class _YtSumState extends State<YtSum> {
                     ),
                   ),
               ],
-            ),
-          ),
-          Positioned(
-            top: 40,
-            left: 10,
-            child: IconButton(
-              icon: Icon(Icons.arrow_back, color: Colors.black),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => UnderProgress()),
-                );
-              },
             ),
           ),
         ],

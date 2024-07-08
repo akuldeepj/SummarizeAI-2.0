@@ -8,6 +8,7 @@ import 'package:summarizeai/utils/Hexcolor.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import 'package:summarizeai/utils/secret.dart';
 import 'package:summarizeai/screens/underprogress.dart';
+import 'package:summarizeai/screens/navbar.dart';
 
 class PdfUploadPage extends StatefulWidget {
   @override
@@ -81,6 +82,8 @@ class _PdfUploadPageState extends State<PdfUploadPage> {
     final screenSize = MediaQuery.of(context).size;
 
     return Scaffold(
+      drawer: navbar(),
+      appBar: AppBar(title: Text('PDF Summary'),),
       body: Stack(
         children: [
           SingleChildScrollView(
@@ -89,7 +92,7 @@ class _PdfUploadPageState extends State<PdfUploadPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  const SizedBox(height: 70), // Adjust the height to move everything down
+                  const SizedBox(height: 5), // Adjust the height to move everything down
                   Container(
                     margin: EdgeInsets.only(top: 50),
                     child: Row(
@@ -204,19 +207,6 @@ class _PdfUploadPageState extends State<PdfUploadPage> {
                   ),
                 ],
               ),
-            ),
-          ),
-          Positioned(
-            top: 40,
-            left: 10,
-            child: IconButton(
-              icon: Icon(Icons.arrow_back, color: Colors.black),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => UnderProgress()),
-                );
-              },
             ),
           ),
         ],

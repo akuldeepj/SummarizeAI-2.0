@@ -8,6 +8,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:summarizeai/utils/secret.dart';
 import 'package:summarizeai/screens/underprogress.dart';
+import 'package:summarizeai/screens/navbar.dart';
 
 class MindMapApp extends StatelessWidget {
   const MindMapApp({super.key});
@@ -137,6 +138,8 @@ class _MindMapScreenState extends State<MindMapScreen> with SingleTickerProvider
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: navbar(),
+      appBar: AppBar(title: Text('Mind Map'),),
       body: Stack(
         children: [
           SingleChildScrollView(
@@ -145,7 +148,7 @@ class _MindMapScreenState extends State<MindMapScreen> with SingleTickerProvider
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  const SizedBox(height: 70), // Adjust the height to move everything down
+                  const SizedBox(height: 5), // Adjust the height to move everything down
                   Container(
                     margin: EdgeInsets.only(top: 50),
                     child: ElevatedButton(
@@ -191,16 +194,6 @@ class _MindMapScreenState extends State<MindMapScreen> with SingleTickerProvider
                     ),
                 ],
               ),
-            ),
-          ),
-          Positioned(
-            top: 40,
-            left: 10,
-            child: IconButton(
-              icon: Icon(Icons.arrow_back, color: Colors.black),
-              onPressed: () {
-                Navigator.pop(context);
-              },
             ),
           ),
         ],

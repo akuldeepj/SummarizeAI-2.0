@@ -3,6 +3,7 @@ import 'package:summarizeai/screens/pdfsum.dart';
 import 'package:summarizeai/screens/yt_sum.dart';
 import 'package:summarizeai/screens/flowchart.dart';
 import 'package:summarizeai/utils/Hexcolor.dart';
+import 'package:summarizeai/screens/navbar.dart';
 
 class UnderProgress extends StatelessWidget {
   const UnderProgress({super.key});
@@ -10,10 +11,12 @@ class UnderProgress extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: navbar(),
+      appBar: AppBar(title: Text('Home'),),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          const SizedBox(height: 110), // Adjust the height to move the text up
+          const SizedBox(height: 40), // Adjust the height to move the text up
           const Padding(
             padding: EdgeInsets.only(left: 20.0), // Move the text to the right
             child: Text(
