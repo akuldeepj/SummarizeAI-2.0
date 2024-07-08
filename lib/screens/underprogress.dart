@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:summarizeai/screens/pdfsum.dart';
 import 'package:summarizeai/screens/yt_sum.dart';
 import 'package:summarizeai/screens/flowchart.dart';
+import 'package:summarizeai/utils/Hexcolor.dart';
 
 class UnderProgress extends StatelessWidget {
   const UnderProgress({super.key});
@@ -36,10 +37,11 @@ class UnderProgress extends StatelessWidget {
                     );
                   },
                   child: Card(
+                    color: Color.fromARGB(255,229,222,246),  // Set the new background color for the card
                     margin: const EdgeInsets.all(10),
                     child: Container(
                       padding: const EdgeInsets.all(20),
-                      constraints: const BoxConstraints(minHeight: 220), // Set minimum height
+                      constraints: const BoxConstraints(minHeight: 220),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: const <Widget>[
@@ -47,16 +49,16 @@ class UnderProgress extends StatelessWidget {
                             padding: EdgeInsets.only(left: 6.0, top: 40.0),
                             child: CircleAvatar(
                               radius: 25,
-                              backgroundColor: Color.fromARGB(255, 102, 102, 102),
-                              child: Icon(Icons.video_library, size: 30, color: Colors.white),
+                              backgroundColor: Colors.white,
+                              child: Icon(Icons.video_library, size: 30, color: Color.fromARGB(255,26,67,78)), // Change the icon color
                             ),
                           ),
-                          SizedBox(height: 10), // Add some space between the icon and the texts
+                          SizedBox(height: 10),
                           Padding(
                             padding: EdgeInsets.only(left: 8.0),
                             child: Text(
                               'Youtube video',
-                              style: TextStyle(fontSize: 18, color: Colors.black),
+                              style: TextStyle(fontSize: 18, color: Colors.black, fontWeight: FontWeight.bold),
                             ),
                           ),
                           SizedBox(height: 5),
@@ -64,7 +66,7 @@ class UnderProgress extends StatelessWidget {
                             padding: EdgeInsets.only(left: 10.0),
                             child: Text(
                               'Paste video link',
-                              style: TextStyle(fontSize: 16, color: Color.fromARGB(255, 102, 102, 102)),
+                              style: TextStyle(fontSize: 16, color: Color.fromARGB(255, 83, 83, 83)),
                             ),
                           ),
                         ],
@@ -82,6 +84,7 @@ class UnderProgress extends StatelessWidget {
                     );
                   },
                   child: Card(
+                    color: Color.fromARGB(255,250,243,235),
                     margin: const EdgeInsets.all(10),
                     child: Container(
                       padding: const EdgeInsets.all(20),
@@ -93,8 +96,8 @@ class UnderProgress extends StatelessWidget {
                             padding: EdgeInsets.only(left: 6.0, top: 40.0),
                             child: CircleAvatar(
                               radius: 25,
-                              backgroundColor: Color.fromARGB(255, 102, 102, 102),
-                              child: Icon(Icons.download, size: 30, color: Colors.white),
+                              backgroundColor: Colors.white,
+                              child: Icon(Icons.download, size: 30, color: Color.fromARGB(255,26,67,78)),
                             ),
                           ),
                           SizedBox(height: 10), // Add some space between the icon and the texts
@@ -102,7 +105,7 @@ class UnderProgress extends StatelessWidget {
                             padding: EdgeInsets.only(left: 8.0),
                             child: Text(
                               'Pick a file',
-                              style: TextStyle(fontSize: 18, color: Colors.black),
+                              style: TextStyle(fontSize: 18, color: Colors.black,fontWeight: FontWeight.bold),
                             ),
                           ),
                           SizedBox(height: 5),
@@ -110,7 +113,7 @@ class UnderProgress extends StatelessWidget {
                             padding: EdgeInsets.only(left: 10.0),
                             child: Text(
                               'Upload your PDF file',
-                              style: TextStyle(fontSize: 16, color: Color.fromARGB(255, 102, 102, 102)),
+                              style: TextStyle(fontSize: 16, color: Color.fromARGB(255, 83, 83, 83)),
                             ),
                           ),
                         ],
@@ -134,6 +137,7 @@ class UnderProgress extends StatelessWidget {
                     );
                   },
                   child: Card(
+                    color: Color.fromARGB(255,235,250,239),
                     margin: const EdgeInsets.all(10),
                     child: Container(
                       padding: const EdgeInsets.all(20),
@@ -145,8 +149,8 @@ class UnderProgress extends StatelessWidget {
                             padding: EdgeInsets.only(left: 6.0),
                             child: CircleAvatar(
                               radius: 25,
-                              backgroundColor: Color.fromARGB(255, 102, 102, 102),
-                              child: Icon(Icons.insert_chart, size: 30, color: Colors.white),
+                              backgroundColor: Colors.white,
+                              child: Icon(Icons.insert_chart, size: 30, color: Color.fromARGB(255,26,67,78)),
                             ),
                           ),
                           SizedBox(height: 10), // Add some space between the icon and the texts
@@ -154,7 +158,7 @@ class UnderProgress extends StatelessWidget {
                             padding: EdgeInsets.only(left: 8.0),
                             child: Text(
                               'Flowchart',
-                              style: TextStyle(fontSize: 18, color: Colors.black),
+                              style: TextStyle(fontSize: 18, color: Colors.black,fontWeight: FontWeight.bold),
                             ),
                           ),
                           SizedBox(height: 5),
@@ -162,7 +166,7 @@ class UnderProgress extends StatelessWidget {
                             padding: EdgeInsets.only(left: 10.0),
                             child: Text(
                               'Create a mind map',
-                              style: TextStyle(fontSize: 16, color: Color.fromARGB(255, 102, 102, 102)),
+                              style: TextStyle(fontSize: 16, color: Color.fromARGB(255, 83, 83, 83)),
                             ),
                           ),
                         ],

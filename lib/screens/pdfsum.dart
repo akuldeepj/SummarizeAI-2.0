@@ -105,7 +105,7 @@ class _PdfUploadPageState extends State<PdfUploadPage> {
                                 borderRadius: BorderRadius.circular(10.0), // Rounded corners
                               ),
                               padding: EdgeInsets.symmetric(vertical: 15.0), // Adjust button height
-                              backgroundColor: Colors.black,
+                              backgroundColor: Color.fromARGB(255,26,67,78),
                             ),
                           ),
                         ),
@@ -120,7 +120,7 @@ class _PdfUploadPageState extends State<PdfUploadPage> {
                                 borderRadius: BorderRadius.circular(10.0), // Rounded corners
                               ),
                               padding: EdgeInsets.symmetric(vertical: 15.0), // Adjust button height
-                              backgroundColor: Colors.black,
+                              backgroundColor: Color.fromARGB(255,26,67,78),
                             ),
                           ),
                         ),
@@ -146,7 +146,7 @@ class _PdfUploadPageState extends State<PdfUploadPage> {
                       width: screenSize.width - 20,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
-                        color: Colors.black,
+                        color: Color.fromARGB(255,245,246,250),
                       ),
                       child: Column(
                         children: [
@@ -159,7 +159,7 @@ class _PdfUploadPageState extends State<PdfUploadPage> {
                                   child: Text(
                                     'Summary will appear here:',
                                     style: TextStyle(
-                                      color: Colors.white,
+                                      color: Colors.black,
                                       fontSize: 16,
                                     ),
                                   ),
@@ -168,7 +168,7 @@ class _PdfUploadPageState extends State<PdfUploadPage> {
                               IconButton(
                                 icon: Icon(
                                   _isSummaryVisible ? Icons.arrow_drop_up : Icons.arrow_drop_down,
-                                  color: Colors.white,
+                                  color: Colors.black,
                                 ),
                                 onPressed: () {
                                   setState(() {
@@ -186,12 +186,12 @@ class _PdfUploadPageState extends State<PdfUploadPage> {
                                   padding: const EdgeInsets.all(10.0),
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
-                                    color: Colors.black,
+                                    color: Color.fromARGB(255,245,246,250),
                                   ),
                                   child: Text(
                                     _extractedText!,
                                     style: TextStyle(
-                                      color: Colors.white,
+                                      color: Colors.black,
                                       fontSize: 16,
                                     ),
                                   ),

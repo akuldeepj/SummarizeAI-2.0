@@ -83,7 +83,7 @@ class _YtSumState extends State<YtSum> {
                           color: Colors.white,
                         ),
                         filled: true,
-                        fillColor: Colors.black,
+                        fillColor: Color.fromARGB(255,26,67,78),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(15),
                         ),
@@ -124,20 +124,20 @@ class _YtSumState extends State<YtSum> {
                           padding: const EdgeInsets.all(10.0), // Decrease the padding
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
-                            color: Colors.black,
+                            color: Color.fromARGB(255,245,246,250),
                           ),
                           child: Row(
                             children: [
                               Expanded(
                                 child: Text(
                                   'Summary will appear here:',
-                                  style: const TextStyle(color: Colors.white, fontSize: 16),
+                                  style: const TextStyle(color: Colors.black, fontSize: 16),
                                 ),
                               ),
                               IconButton(
                                 icon: Icon(
                                   _isSummaryVisible ? Icons.arrow_drop_up : Icons.arrow_drop_down,
-                                  color: Colors.white,
+                                  color: Colors.black,
                                 ),
                                 onPressed: _isSummaryReady
                                     ? () {
@@ -163,11 +163,11 @@ class _YtSumState extends State<YtSum> {
                         padding: const EdgeInsets.all(15.0),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
-                          color: Colors.black,
+                          color: Color.fromARGB(255,245,246,250),
                         ),
                         child: Text(
                           finalsum,
-                          style: const TextStyle(color: Colors.white, fontSize: 16),
+                          style: const TextStyle(color: Colors.black, fontSize: 16),
                         ),
                       ),
                     ),
