@@ -137,6 +137,8 @@ class _MindMapScreenState extends State<MindMapScreen> with SingleTickerProvider
 
   @override
   Widget build(BuildContext context) {
+    final screenSize = MediaQuery.of(context).size;
+
     return Scaffold(
       drawer: navbar(),
       appBar: AppBar(title: Text('Mind Map'),),
@@ -151,12 +153,39 @@ class _MindMapScreenState extends State<MindMapScreen> with SingleTickerProvider
                   const SizedBox(height: 5), // Adjust the height to move everything down
                   Container(
                     margin: EdgeInsets.only(top: 50),
-                    child: ElevatedButton(
-                      onPressed: _pickPDF,
-                      child: Text('Select PDF', style: TextStyle(color: Colors.white)),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.black,
-                      ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: screenSize.width * 0.45, // Adjust button width here
+                          child: ElevatedButton(
+                            onPressed: _pickPDF,
+                            child: Text('Select PDF', style: TextStyle(color: Colors.white)),
+                            style: ElevatedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.0), // Rounded corners
+                              ),
+                              padding: EdgeInsets.symmetric(vertical: 15.0), // Adjust button height
+                              backgroundColor: Color.fromARGB(255, 26, 67, 78),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 10), // Add spacing between buttons
+                        Container(
+                          width: screenSize.width * 0.45, // Adjust button width here
+                          child: ElevatedButton(
+                            onPressed: _uploadPDF,
+                            child: Text('Upload PDF', style: TextStyle(color: Colors.white)),
+                            style: ElevatedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.0), // Rounded corners
+                              ),
+                              padding: EdgeInsets.symmetric(vertical: 15.0), // Adjust button height
+                              backgroundColor: Color.fromARGB(255, 26, 67, 78),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                   SizedBox(height: 20),
@@ -168,14 +197,6 @@ class _MindMapScreenState extends State<MindMapScreen> with SingleTickerProvider
                         child: SfPdfViewer.file(_selectedFile!),
                       ),
                     ),
-                  SizedBox(height: 20),
-                  ElevatedButton(
-                    onPressed: _uploadPDF,
-                    child: Text('Upload PDF', style: TextStyle(color: Colors.white)),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.black,
-                    ),
-                  ),
                   SizedBox(height: 20),
                   if (_mindMapCode.isNotEmpty)
                     FadeTransition(
