@@ -1,11 +1,11 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:summarizeai/screens/underprogress.dart';
 import 'package:summarizeai/utils/Hexcolor.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:summarizeai/utils/secret.dart';
 import 'package:summarizeai/screens/navbar.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class YtSum extends StatefulWidget {
   const YtSum({Key? key}) : super(key: key);
@@ -36,6 +36,14 @@ class _YtSumState extends State<YtSum> {
     } else {
       throw Exception('Failed to load summary');
     }
+  }
+
+  Future<void> saveHistory(String link, String summary) async {
+    final prefs = await SharedPreferences.getInstance();
+    final history = prefs.getStringList('history') ?? [];
+    final date = DateTime.now().toString();
+    history.insert(0, '$link|$summary|$date');
+    await prefs.setStringList('history', history);
   }
 
   @override
@@ -96,6 +104,7 @@ class _YtSumState extends State<YtSum> {
                         if (videoId != null) {
                           _controller.load(videoId);
                           String summary = await getVideoSummary(value);
+                          await saveHistory(value, summary);
                           setState(() {
                             finalsum = summary;
                             _isSummaryVisible = true; // Show the summary when it's ready

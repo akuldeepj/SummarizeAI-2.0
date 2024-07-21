@@ -7,8 +7,8 @@ import 'package:summarizeai/screens/hh.dart';
 import 'package:summarizeai/utils/Hexcolor.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import 'package:summarizeai/utils/secret.dart';
-import 'package:summarizeai/screens/underprogress.dart';
 import 'package:summarizeai/screens/navbar.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class PdfUploadPage extends StatefulWidget {
   @override
@@ -41,8 +41,7 @@ class _PdfUploadPageState extends State<PdfUploadPage> {
       return;
     }
 
-    var uri = Uri.parse(
-        '$IPAddress/api/pdfsummary'); // Replace with your server endpoint
+    var uri = Uri.parse('$IPAddress/api/pdfsummary'); // Replace with your server endpoint
 
     var request = http.MultipartRequest('POST', uri)
       ..files.add(await http.MultipartFile.fromPath(
@@ -59,11 +58,23 @@ class _PdfUploadPageState extends State<PdfUploadPage> {
         _extractedText = json.decode(responseBody)['text'];
         _isSummaryVisible = true; // Show summary when text is extracted
       });
+
+      // Save history
+      String pdfLink = _selectedFile!.path; // You might want to use a proper link here
+      await saveHistory(pdfLink, _extractedText!);
     } else {
       // Error uploading file
       print('Failed to upload file');
       print(response.reasonPhrase);
     }
+  }
+
+  Future<void> saveHistory(String link, String summary) async {
+    final prefs = await SharedPreferences.getInstance();
+    final history = prefs.getStringList('history') ?? [];
+    final date = DateTime.now().toString();
+    history.insert(0, '$link|$summary|$date');
+    await prefs.setStringList('history', history);
   }
 
   void _openPdfViewer() {
@@ -156,9 +167,9 @@ class _PdfUploadPageState extends State<PdfUploadPage> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Expanded(
+                              const Expanded(
                                 child: Padding(
-                                  padding: const EdgeInsets.all(10.0),
+                                  padding: EdgeInsets.all(10.0),
                                   child: Text(
                                     'Summary will appear here:',
                                     style: TextStyle(
@@ -193,7 +204,7 @@ class _PdfUploadPageState extends State<PdfUploadPage> {
                                   ),
                                   child: Text(
                                     _extractedText!,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       color: Colors.black,
                                       fontSize: 16,
                                     ),

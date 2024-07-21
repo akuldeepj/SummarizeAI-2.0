@@ -7,7 +7,6 @@ import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:summarizeai/utils/secret.dart';
-import 'package:summarizeai/screens/underprogress.dart';
 import 'package:summarizeai/screens/navbar.dart';
 
 class MindMapApp extends StatelessWidget {
