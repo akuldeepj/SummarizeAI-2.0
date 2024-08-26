@@ -107,9 +107,19 @@ class _MindMapScreenState extends State<MindMapScreen> with SingleTickerProvider
             mermaid.initialize({startOnLoad:true});
           </script>
           <style>
+            body, html {
+              margin: 0;
+              padding: 0;
+              width: 100%;
+              height: 100%;
+              overflow: hidden;
+            }
             .mermaid {
-              transform: rotate(90deg); /* Rotate the mind map 90 degrees to the right */
-              transform-origin: top center; /* Adjust the transform origin to top center */
+              width: 100%;
+              height: 100%;
+              display: flex;
+              justify-content: center;
+              align-items: center;
             }
           </style>
         </head>
@@ -149,37 +159,37 @@ class _MindMapScreenState extends State<MindMapScreen> with SingleTickerProvider
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  const SizedBox(height: 5), // Adjust the height to move everything down
+                  const SizedBox(height: 5),
                   Container(
                     margin: EdgeInsets.only(top: 50),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Container(
-                          width: screenSize.width * 0.45, // Adjust button width here
+                          width: screenSize.width * 0.45,
                           child: ElevatedButton(
                             onPressed: _pickPDF,
                             child: Text('Select PDF', style: TextStyle(color: Colors.white)),
                             style: ElevatedButton.styleFrom(
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10.0), // Rounded corners
+                                borderRadius: BorderRadius.circular(10.0),
                               ),
-                              padding: EdgeInsets.symmetric(vertical: 15.0), // Adjust button height
+                              padding: EdgeInsets.symmetric(vertical: 15.0),
                               backgroundColor: Color.fromARGB(255, 26, 67, 78),
                             ),
                           ),
                         ),
-                        const SizedBox(width: 10), // Add spacing between buttons
+                        const SizedBox(width: 10),
                         Container(
-                          width: screenSize.width * 0.45, // Adjust button width here
+                          width: screenSize.width * 0.45,
                           child: ElevatedButton(
                             onPressed: _uploadPDF,
                             child: Text('Upload PDF', style: TextStyle(color: Colors.white)),
                             style: ElevatedButton.styleFrom(
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10.0), // Rounded corners
+                                borderRadius: BorderRadius.circular(10.0),
                               ),
-                              padding: EdgeInsets.symmetric(vertical: 15.0), // Adjust button height
+                              padding: EdgeInsets.symmetric(vertical: 15.0),
                               backgroundColor: Color.fromARGB(255, 26, 67, 78),
                             ),
                           ),
@@ -192,7 +202,7 @@ class _MindMapScreenState extends State<MindMapScreen> with SingleTickerProvider
                     GestureDetector(
                       onTap: () {},
                       child: Container(
-                        height: 500, // Increase the height of the PDF viewer
+                        height: 500,
                         child: SfPdfViewer.file(_selectedFile!),
                       ),
                     ),
@@ -201,14 +211,16 @@ class _MindMapScreenState extends State<MindMapScreen> with SingleTickerProvider
                     FadeTransition(
                       opacity: _animation,
                       child: Container(
-                        height: 500, // Increase the height of the mind map container
+                        height: MediaQuery.of(context).size.height * 0.7,
                         child: WebView(
                           initialUrl: 'about:blank',
                           onWebViewCreated: (controller) {
                             _controller = controller;
-                            _loadMindMap(); // Ensure _loadMindMap is called after the controller is initialized
+                            _loadMindMap();
                           },
                           javascriptMode: JavascriptMode.unrestricted,
+                          gestureNavigationEnabled: true,
+                          zoomEnabled: true,
                         ),
                       ),
                     ),
